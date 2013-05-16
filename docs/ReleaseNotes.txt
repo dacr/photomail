@@ -1,0 +1,36 @@
+PhotoMailWizard RELEASE NOTES
+
+1.1.1 - 2005-xx-yy Bug fixes and minor enhancements
+     * BUG : 
+
+1.1.0 - 2005-06-29 New features and bug fixes
+     * Photo search by keywords
+     * Photo search by comments words
+     * Adding keywords to photos
+     * Automatic mail parameters configuration
+       (by using thunderbird, mozilla/mail or outlook express current configuration)
+     * Comments insertion is available for all 
+     * BUG : No more rotation during progressive image loading (performance issue)
+     * BUG : Thumbnails generator didn't fail anymore when bad image file encountered
+     * BUG : Internal exceptions fixes 
+
+1.0.2 - 2005-06-02 New features and bug fixes
+     * Progressive loading added
+     * Search for photo already sent during a given time period
+     * Thumbnails are shown bigger
+     * Only ImageIO is now use to load / process photos and thumbnails
+     * BUG : BMP format is now working fine
+     * BUG : Comments are now added after the photo has been rotated and not before ;)
+     * BUG : A new search must not give back results already chosen
+     * BUG : Progress must not indicate 100% while activity is not finished (preparing & sending)
+
+1.0.1 - 2005-04-25 - Maintenace release, it fixes the following bugs :
+     * black rectangle if photos dimensions are not proportional to "640x480"
+     * quote characters are badly interpreted (disappears) in subject
+     * SMTP error management enhancements
+     * SMTP Authentication error not taken into account
+     * Restart search only if search parameters have been modified
+     * MailSend Stop doesn't work well
+
+1.0.0 - 2005-04-20 - First public release
+

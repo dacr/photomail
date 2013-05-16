@@ -1,0 +1,48 @@
+-------------------------------------------------------------------------------------------
+TRAVAUX REALISES :
+- DONE : Bug date à corriger
+- DONE : Le programme d'installation
+- DONE : Icônes sur les boutons (rotations, ...)
+- DONE : Tooltips sur les boutons de sélections des photos et de revues des photos
+- DONE : Internationalisation
+- DONE : INTERRUPTED while loading Image survenant occasionnellement lors de l'arrêt de l'application
+         surtout si le ThumbnailGenerator est en route...
+- DONE : Effectuer la génération des fichiers temporaires dans ~/.photomailwizard
+- DONE : Fichier de traduction "Anglais"
+- DONE : CONCURRENCY FAILURES !!!! ATTENTION => Dans ThumbnailGenerator avec notifyListeners sur setThumbnailImageFile d'ImageInfo
+- DONE : Site internet
+- DONE : Envoyer Mail de modification/initialisation du Sender vers photomailwizard@wanadoo.fr
+- DONE : Revoir le compteur d'avancement de l'image => ne pas rafraichir toute l'image => ralentit trop l'appli
+        => Mais attention c'est une prévious image qui a été tournée qui provoque un ralentissement (à cause du refresh)
+        => quelques petites améliorations...
+- DONE : Dans MailActivity : Rendre l'envoi de mail insensible à des modifications ultérieurs du setup
+         (changement des destinataires, du message, ...)
+- DONE : Ne pas refaire la recherche si aucun paramètre de recherche n'a été changé
+- DONE : Correction bug du quote dans le subject provoqué par MessageFormat
+- DONE : Bug bandeau noir sur les images envoyés en 640x480 !!!
+         Problème lié au format non proportionnel à l'écran standard
+- DONE : Gérer correctement l'erreur d'authentification voir logs de Cyrille
+        => Probablement fait mais non testé unitairement
+- DONE : Bug Windows!? Générateur de miniatures déconnant / Image ne s'affichant pas dans le viewer, ...
+        => Problème FileSystem avec l'identificateur de volume
+- DONE : Ne pas oublier d'enlever l'option debug une fois le bug précédent corrigé
+- DONE : EVOLUTION : Mise en place de commentaires sur chaque photos
+- DONE : EVOLUTION : Incorporer les commentaires dans les photos
+- DONE : EVOLUTION : Persister les paramètres des photos (avec les thumnails) (Rotation effectuée, commentaires, mots clés, ...)
+- DONE : SE FAIRE UN PAD FILE ET LE METTRE SUR LE SITE !!!
+         => http://www.padspec.org/padfaq.php
+- DONE : EVOLUTION : Faire une recherche sur les photos envoyés dernièrement (2 jours, 1 semaine, ...)
+- DONE : Dans les résultats de recherche ne pas réafficher des photos déjà sélectionnées
+- DONE : EVOLUTION : Permettre la saisie de mots clés sur chaque photos
+- DONE : La configuration initiale (Comment récupérer le serveur SMTP déjà configuré ?)
+
+-------------------------------------------------------------------------------------------
+TRAVAUX RESTANT A FAIRE :
+- TODO : Erreurs survenant à l'envois => amélioration de la gestion
+- TODO : Extraction des données EXIF pouvant être contenues dans les photos
+- TODO : Prise en compte du bouton "suppr" et reselection du suivant après suppression
+- TODO : Marques "slides" doivent être plus visibles (revoir la couleur)
+
+- TODO : Permettre la sélection par revue (et la gestion des mots clés à ce niveau).
+- TODO : 
+

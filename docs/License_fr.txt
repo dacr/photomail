@@ -1,0 +1,32 @@
+Copyright (c) 2005 David Crosson. Tous droits réservés.
+
+La version actuelle est disponible gratuitement et sans
+aucune limitation. L'utilisation et la redistribution de
+l'exécutable est permise à partir du moment où les conditions
+suivantes sont respectées :
+
+1. Les redistributions doivent comprendre le texte de Copyright,
+   cette liste de conditions et les mises en garde qui suivent
+   dans toute documentation et/ou support fournis avec la
+   distribution.
+
+2. Vous autorisez le logiciel à envoyer à l'auteur, votre adresse
+   email ainsi que tout changement que vous y apporteriez. Vous
+   acceptez de recevoir des courriers concernant des mises à jours
+   ou informations à propos de ce produit.
+   Pour enlever cette condition, achetez le produit. Contacter
+   l'auteur pour plus d'information à ce sujet.
+
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED.  IN NO EVENT SHALL DAVID CROSSON OR USED THIRD PARTY
+SOFTWARE AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.

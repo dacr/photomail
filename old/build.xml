@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+
+<project name="photomail" default="dist" basedir=".">
+    <description>Builds, tests, and runs the project photomail.</description>
+
+    <property file="build.properties"/>
+
+    <path id="cpcompid">
+        <fileset dir="${project.lib}" id="libid">
+            <include name="**/*.jar"/>
+            <exclude name="**/yguard*.jar"/>
+            <exclude name="**/junit*.jar"/>
+        </fileset>
+        <fileset dir="${project.lib}">
+            <include name="**/junit*.jar"/>        
+        </fileset>
+    </path>
+    
+    <path id="yguardcpid">
+        <fileset dir="${project.lib}">
+            <include name="**/yguard-*.jar"/>
+        </fileset>
+    </path>
+    
+    <path id="cprunid">
+        <path refid="cpcompid"/>
+        <pathelement location="${project.classes}"/>
+    </path>
+
+    <path id="cptestid">
+        <path refid="cpcompid"/>
+        <pathelement location="${project.classes}"/>
+        <fileset dir="${project.lib}">
+            <include name="**/junit-*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="izpackcpid">
+        <fileset dir="${izpack.dir}">
+            <include name="**/compiler.jar"/>
+        </fileset>
+    </path>
+        
+    <pathconvert targetos="unix" pathsep=" " property="project.exec.classpath"  refid="cpcompid">
+        <map from="${basedir}${file.separator}${project.lib}${file.separator}" to=""/>
+    </pathconvert>
+    
+    <!-- ************************************************************************* -->
+    
+    <target name="clean">
+        <delete dir="${project.classes}"/>
+        <delete dir="${project.dist}"/>
+        <delete dir="${project.disth}"/>
+        <delete dir="${project.sitews}"/>
+        <delete dir="${project.disti}"/>
+        <delete>
+            <fileset dir="." defaultexcludes="no">
+                <include name="**/*~"/>
+                <include name="**/*.*~"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <!-- ************************************************************************* -->
+    
+    <target name="init">
+        <mkdir dir="${project.classes}"/>
+        <mkdir dir="${project.dist}"/>
+    </target>
+
+    <!-- ************************************************************************* -->
+    
+    <target name="compile" depends="init">
+        <filter filtersfile="build.properties"/>
+        <copy todir="${project.classes}" filtering="false">
+            <fileset dir="${project.conf}">
+                <include name="**/*.png"/>
+            </fileset>
+        </copy>
+        <copy todir="${project.classes}" filtering="true">
+            <fileset dir="${project.conf}">
+                <include name="**/*.properties"/>
+                <include name="**/*.jnlp"/>
+                <exclude name="installer"/>
+            </fileset>
+        </copy>
+        <javac srcdir="${project.src}"
+               destdir="${project.classes}"
+               classpathref="cpcompid"
+               debug="false"
+               optimize="true"/>
+    </target>
+
+    <!-- ************************************************************************* -->
+    
+    <target name="dist" depends="compile">
+        <jar destfile="${project.dist}/${product.jar}">
+            <fileset dir="${project.classes}">
+                <include name="**/*.class"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.png"/>
+                <exclude name="installer"/>
+            </fileset>
+            <manifest>
+              <attribute name="Built-By"   value="${product.author}"/>
+              <attribute name="Class-path" value="${project.exec.classpath}"/>
+              <attribute name="Main-Class" value="${project.main.class}"/>
+            </manifest>
+        </jar>
+        <copy todir="${project.dist}">
+            <fileset refid="libid"/>
+        </copy>
+    </target>
+
+    <!-- ************************************************************************* -->
+
+    <target name="run" depends="compile">
+        <java classname="${project.main.class}" classpathref="cprunid" fork="true" dir="run">
+            <jvmarg value="${product.memory}"/>
+            <jvmarg value="-Duser.region=fr"/>
+            <jvmarg value="-Duser.language=fr"/>
+        </java>
+    </target>
+
+    <!-- ************************************************************************* -->
+
+    <target name="test" depends="compile">
+        <java classname="${project.test.class}" classpathref="cptestid" fork="true" dir="test">
+            <jvmarg value="${product.memory}"/>
+        </java>
+    </target>
+    
+    <!-- ************************************************************************* -->
+
+    <target name="debug" depends="compile">
+        <java classname="${project.main.class}" classpathref="cprunid" fork="true">
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="${product.memory}"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_shmem,address=pmw,server=y,suspend=n"/>
+        </java>
+    </target>
+
+    <target name="debugNet" depends="compile">
+        <java classname="${project.main.class}" classpathref="cptestid" fork="true">
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="${product.memory}"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=4512"/>
+        </java>
+    </target>
+
+    <!-- ************************************************************************* -->
+    
+    <taskdef name="obfuscate" 
+      classname="com.yworks.yguard.ObfuscatorTask" 
+      classpathref="yguardcpid"/>
+      
+    <target name="disth" depends="dist">
+        <delete dir="${project.disth}"/>
+        <mkdir dir="${project.disth}"/>
+        <obfuscate logfile="yguard_log_output.xml" replaceclassnamestrings="true">        
+            <inoutpair in="${project.dist}/${product.jar}" out="${project.disth}/${product.jar}"/>
+            <property name="error-checking" value="pedantic"/>
+            <externalclasses>
+                <fileset dir="${project.lib}${file.separator}">
+                    <include name="**/*.jar"/>
+                    <exclude name="**/yguard*"/>
+                </fileset>
+            </externalclasses>
+            <expose sourcefile="false" linenumbertable="false" >
+                <class classes="public" methods="public" fields="none">
+                    <patternset>
+                        <include name="**.ApplicationProperties"/>
+                        <include name="**.setup."/>
+                        <include name="**.Main"/>
+                    </patternset>
+                </class>
+                <method class="${project.main.class}" name="void main(java.lang.String[])"/>
+            </expose>
+        </obfuscate>
+        <copy todir="${project.disth}">
+            <fileset refid="libid"/>
+        </copy>
+        <signjar alias="photomailwizard" storepass="secret" keystore="keystore" keypass="secret">
+            <fileset dir="${project.disth}">
+                <include name="**/*.jar"/>
+                <exclude name="**/javamail-*.jar"/>
+                <exclude name="**/activation-*.jar"/>
+            </fileset>
+        </signjar>
+    </target>
+    
+    <!-- ************************************************************************* -->
+
+    <taskdef name="izpack" 
+      classname="com.izforge.izpack.ant.IzPackTask" 
+      classpathref="izpackcpid"/>
+
+    <target name="disti" depends="disth">
+        <delete dir="${project.disti}"/>
+        <mkdir dir="${project.disti}"/>
+
+        <!--   MANUAL ZIP INSTALLATION FILE  -->
+        <zip destfile="${project.disti}/${product.zip}">
+            <zipfileset dir="${project.disth}" includes="**/*.jar" prefix="${product.name}"/>
+            <zipfileset dir="docs" prefix="${product.name}">
+                <include name="Readme*.txt"/>
+                <include name="License*.txt"/>
+                <include name="ReleaseNotes*.txt"/>
+            </zipfileset>
+        </zip>
+
+        <!--   IZPACK INSTALLER   -->
+        <filter filtersfile="build.properties"/>
+        <copy todir="${project.disti}" filtering="true" flatten="true">
+            <fileset dir="${project.conf}">
+                <include name="installer/*.xml"/>
+            </fileset>
+        </copy>
+        <izpack input="${basedir}/${project.disti}/installer.xml"
+                output="${basedir}/${project.disti}/${product.installerjar}"
+                installerType="standard" basedir="${basedir}"
+                izPackDir="${basedir}/${izpack.dir}"/>
+
+        <!-- Zip file containing the installer (for PAD description) -->
+        <zip destfile="${project.disti}/${product.installerzip}">
+            <zipfileset dir="${project.disti}">
+                <include name="${product.installerjar}"/>
+            </zipfileset>
+            <zipfileset dir="docs">
+                <include name="InstallerReadme.txt"/>
+            </zipfileset>
+        </zip>
+    </target>
+    <!-- ************************************************************************* -->
+
+    <target name="deploy">
+        <!-- Initialisation du répertoire WebStart du Site -->
+        <mkdir dir="${project.sitews}"/>
+        <copy todir="${project.sitews}" flatten="true">
+            <fileset dir="${project.disth}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${project.classes}">
+                <include name="**/*.jnlp"/>
+            </fileset>
+        </copy>
+
+        <!-- Initialisation du répertoire Download du Site -->
+        <mkdir dir="${project.sitedownload}"/>
+        <copy todir="${project.sitedownload}" flatten="true">
+            <fileset dir="${project.disti}">
+                <include name="**/*.jar"/>
+                <include name="**/*.zip"/>
+            </fileset>
+        </copy>
+
+        <!-- Synchronisation avec les nouveaux fichiers du sites web -->
+        
+        <copy todir="${project.deploydir}">
+            <fileset dir="${project.site}">
+                <include name="**/*.*"/>
+                <exclude name="**/*.html"/>
+                <exclude name="**/*.xml"/>
+            </fileset>
+        </copy>
+        <filter filtersfile="build.properties"/>
+        <copy todir="${project.deploydir}" filtering="true">
+            <fileset dir="${project.site}">
+                <include name="**/*.html"/>
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
+        
+    </target>
+    
+</project>

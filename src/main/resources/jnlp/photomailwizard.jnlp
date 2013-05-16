@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- @product.url@/ws -->
+<!-- file:/home/dcr/sites/reuse/photomailwizard/ws/ -->
+<jnlp
+  spec="1.5+"
+  codebase="@product.url@/ws"
+  href="photomailwizard.jnlp">
+
+  <information>
+    <title>@product.name@</title>
+    <vendor>@product.author@</vendor>
+    <homepage href="@product.url@"/>
+    <description>Photo Mail Wizard</description>
+    <description kind="short">A wizard to quickly and easily send photo by email.</description>
+    <icon href="@product.url@/images/logo32.gif"/>
+    <!--<icon kind="splash" href="images/photomailwizard.gif"/>-->
+    <offline-allowed/> 
+    <shortcut online="false">
+      <desktop/>
+      <menu submenu="Photo wizards"/>
+    </shortcut>
+  </information>
+
+  <security>
+      <all-permissions/>
+  </security>
+
+  <resources>
+    <j2se version="1.5.0+" java-vm-args="-esa @product.memory@ -Xnoclassgc"/>
+    <jar href="@product.jar@"/>
+    <jar href="looks-1.2.2.jar"/>
+    <jar href="forms-1.0.5.jar"/>
+    <jar href="metadata-extractor-2.2.2.jar"/>
+    <jar href="jregistrykey-1.3.jar"/>
+    <jar href="jregistrykeylib-1.3.jar"/>
+    <nativelib href="jregistrykeylib-1.3.jar"/>
+
+    <extension href="jwsdp.jnlp"/>
+  </resources>
+  
+  <application-desc main-class="@project.main.class@"/>
+
+</jnlp>
+
